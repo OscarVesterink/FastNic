@@ -1,0 +1,42 @@
+networks:
+  api-db:
+    # Connects API to the database.
+    driver: bridge
+
+services:
+  postgresql:
+    image: postgres:14.3-alpine
+    container_name: fp-postgres
+    ports:
+      - ${SQL_PORT}:${SQL_PORT}
+    environment:
+      POSTGRES_USER: ${SQL_USER}
+      POSTGRES_PASSWORD: ${SQL_PASSWORD}
+      POSTGRES_DB: ${SQL_DATABASE}
+    networks:
+      - api-db
+    healthcheck:
+      test: pg_isready -U $$SQL_USER
+      start_period: 3s
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      dockerfile: Dockerfile
+      args:
+        - API_PORT=${API_PORT}
+    container_name: fp-api
+    ports:
+      - ${API_PORT}:${API_PORT}
+    env_file: .env
+    depends_on:
+      postgresql:
+        condition: service_started
+      s3:
+        condition: service_started
+      kafka:
+        condition: service_started
+    networks:
+      - api-db

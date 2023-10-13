@@ -8,7 +8,7 @@ import pydantic
 class Settings(pydantic.BaseSettings):
     """Sets up the environment variables."""
 
-    APP_NAME: str = "FaPi API"
+    APP_NAME: str = "FastNic"
     LOGGING_REQUESTS_FILE: str = pydantic.Field(
         "requests_logging.txt", env="LOGGING_REQUESTS_FILE"
     )
@@ -28,7 +28,10 @@ class Settings(pydantic.BaseSettings):
     SQL_PASSWORD: str = pydantic.Field("INSECURE_PASSWORD", env="SQL_PASSWORD")
     SQL_HOST: str = pydantic.Field("127.0.0.1", env="SQL_HOST")
     SQL_PORT: str = pydantic.Field("5432", env="SQL_PORT")
-    SQL_DATABASE: str = pydantic.Field("fapi", env="SQL_DATABASE")
+    SQL_DATABASE: str = pydantic.Field("fastnic", env="SQL_DATABASE")
+
+    PICNIC_USERNAME: str = pydantic.Field("INSECURE_USERNAME", env="PICNIC_USERNAME")
+    PICNIC_PASSWORD: str = pydantic.Field("INSECURE_PASSWORD", env="PICNIC_PASSWORD")
 
     SERVICE_CONNECTION_TIMEOUT: int = pydantic.Field(
         300, env="SERVICE_TIMEOUT"

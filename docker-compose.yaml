@@ -6,7 +6,7 @@ networks:
 services:
   postgresql:
     image: postgres:14.3-alpine
-    container_name: fp-postgres
+    container_name: fn-postgres
     ports:
       - ${SQL_PORT}:${SQL_PORT}
     environment:
@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
       args:
         - API_PORT=${API_PORT}
-    container_name: fp-api
+    container_name: fn-api
     ports:
       - ${API_PORT}:${API_PORT}
     env_file: .env

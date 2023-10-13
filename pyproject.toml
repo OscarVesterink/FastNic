@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "fastapi-picnic-api"
+name = "FastNic"
 version = "0.1.0"
 description = "A fastAPI api to store recipes and order automatically through Picnic"
 authors = ["Oscar Vesterink"]
@@ -16,6 +16,7 @@ pydantic = "^2.4.2"
 pydantic-settings = "^2.0.3"
 requests-toolbelt = "^1.0.0"
 requests = "^2.31.0"
+python-picnic-api = "^1.1.0"
 
 
 [tool.poetry.group.dev.dependencies]

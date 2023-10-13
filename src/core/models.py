@@ -33,3 +33,55 @@ class GlobalModel(database_session.Base):
         onupdate=datetime.now(tz=timezone.utc),
         nullable=False,
     )
+
+
+class Recipe(GlobalModel):
+    """Definition of the Recipe model.
+
+    Attributes:
+        id: The unique identifier of the recipe.
+        name: The name of the recipe.
+        category: The category of the recipe.
+
+    Relationships:
+        ingredients: The ingredients of the recipe (one-to-many).
+
+    """
+
+    __tablename__ = "recipes"
+
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    name = sqlalchemy.Column(sqlalchemy.String(128), nullable=False)
+    category = sqlalchemy.Column(sqlalchemy.String(128), nullable=False)
+
+    ingredients: orm.Mapped["Ingredient"] = orm.relationship(
+        back_populates="recipe", cascade="save-update"
+    )
+
+
+class Ingredient(GlobalModel):
+    """Definition of the Ingredient model.
+
+    Attributes:
+        id: The unique identifier of the ingredient.
+        name: The name of the ingredient.
+        recipe_id: The id of the parent recipe of the ingredient.
+
+    Relationships:
+        recipe: The recipe the ingredient belongs to (one-to-many).
+
+    """
+
+    __tablename__ = "ingredients"
+
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    name = sqlalchemy.Column(sqlalchemy.String(128), nullable=False)
+    recipe_id = sqlalchemy.Column(
+        sqlalchemy.Integer,
+        sqlalchemy.ForeignKey("recipes.id"),
+        nullable=True,
+    )
+
+    recipe: orm.Mapped["Recipe"] = orm.relationship(
+        back_populates="ingredients", cascade="save-update"
+    )

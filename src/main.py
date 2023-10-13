@@ -3,8 +3,15 @@ from fastapi.middleware import cors
 
 from src.core import config, openapi, logging
 from src.database import crud as database_crud
+from src.routers.ingredients import views as ingredients_views
+from src.routers.recipes import views as recipes_views
+from src.routers.orders import views as orders_views
 
-views = ""
+views = [
+    ingredients_views,
+    recipes_views,
+    orders_views,
+]
 
 settings = config.get_settings()
 PROXY_PORT = settings.PROXY_PORT
@@ -22,7 +29,7 @@ logging.setup_logging(logger_settings=logger_settings)
 
 tag_metadata = openapi.get_openapi_tags_metadata()
 app = fastapi.FastAPI(
-    title="FaPi",
+    title="FastNic",
     version="0.0.1",
     swagger_ui_parameters={"operationsSorter": "method"},
     openapi_tags=tag_metadata,
@@ -32,7 +39,8 @@ app = fastapi.FastAPI(
     debug=True,
 )
 prefix_router = fastapi.APIRouter(prefix=ROOT_PATH)
-prefix_router.include_router(views.router)
+for view in views:
+    prefix_router.include_router(view.router)
 app.include_router(prefix_router)
 
 # Set up the database

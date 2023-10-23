@@ -10,9 +10,9 @@ from src.routers.health import views as health_views
 
 views = [
     # ingredients_views,
-    # recipes_views,
+    recipes_views,
     # orders_views,
-    health_views
+    health_views,
 ]
 
 settings = config.get_settings()

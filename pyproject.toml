@@ -4,10 +4,9 @@ version = "0.1.0"
 description = "A fastAPI api to store recipes and order automatically through Picnic"
 authors = ["Oscar Vesterink"]
 readme = "README.md"
-packages = [{include = "fastapi_picnic_api"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 fastapi = "^0.103.2"
 psycopg2-binary = "^2.9.9"
 uvicorn = "^0.23.2"

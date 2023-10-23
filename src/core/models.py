@@ -59,29 +59,67 @@ class Recipe(GlobalModel):
     )
 
 
+class Product(GlobalModel):
+    """Definition of the Product model.
+
+    Attributes:
+        id: The unique identifier of the product.
+        name: The name of the product.
+        category: The category of the product.
+        image_uri: The uri of the image of the product.
+
+    Relationships:
+        ingredient: The ingredient the product belongs to (one-to-many).
+
+    """
+
+    __tablename__ = "products"
+
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    name = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
+    category = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
+    image_uri = sqlalchemy.Column(sqlalchemy.String(255), nullable=True)
+
+    ingredients: orm.Mapped["Ingredient"] = orm.relationship(
+        back_populates="product", cascade="all, delete"
+    )
+
+
 class Ingredient(GlobalModel):
     """Definition of the Ingredient model.
 
     Attributes:
         id: The unique identifier of the ingredient.
         name: The name of the ingredient.
+        quantity: The quantity of the ingredient in the recipe, default=1.
         recipe_id: The id of the parent recipe of the ingredient.
+        product_id: The id of the parent product of the ingredient.
 
     Relationships:
         recipe: The recipe the ingredient belongs to (one-to-many).
+        product: The product the ingredient belongs to (one-to-many).
 
     """
 
     __tablename__ = "ingredients"
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String(128), nullable=False)
+    quantity = sqlalchemy.Column(sqlalchemy.Integer, nullable=False, default=1)
     recipe_id = sqlalchemy.Column(
         sqlalchemy.Integer,
         sqlalchemy.ForeignKey("recipes.id"),
-        nullable=True,
+        nullable=False,
+    )
+    product_id = sqlalchemy.Column(
+        sqlalchemy.Integer,
+        sqlalchemy.ForeignKey("products.id"),
+        nullable=False,
     )
 
     recipe: orm.Mapped["Recipe"] = orm.relationship(
+        back_populates="ingredients", cascade="save-update"
+    )
+    product: orm.Mapped["Product"] = orm.relationship(
         back_populates="ingredients", cascade="save-update"
     )

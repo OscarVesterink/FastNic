@@ -22,4 +22,8 @@ def get_openapi_tags_metadata() -> list[dict[str, str]]:
             "name": "Header",
             "description": "A small description related to the header.",
         },
+        {
+            "name": "Health",
+            "description": "Operations to check the health of the API.",
+        },
     ]

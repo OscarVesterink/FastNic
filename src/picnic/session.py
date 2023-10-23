@@ -1,27 +1,36 @@
 """Set up the Picnic connection."""
 import logging
+from typing import Iterator
 
 import python_picnic_api
 
-from src.core import config
+from src.core.config import get_settings
 
-settings = config.get_settings()
-PICNIC_USERNAME = settings.PICNIC_USERNAME
-PICNIC_PASSWORD = settings.PICNIC_PASSWORD
-
-logger = logging.getLogger(settings.LOGGER_CONTROLLERS_NAME)
+logger = logging.getLogger(get_settings().LOGGER_CONTROLLERS_NAME)
 
 
-def get_picnic_client() -> python_picnic_api.PicnicAPI:
+def get_picnic_client() -> Iterator[python_picnic_api.PicnicAPI]:
     """Get the Picnic client.
 
     Returns:
         The Picnic client.
 
     #TODO: Add a retry mechanism.
-    #TODO: Add a generator.
 
     """
-    return python_picnic_api.PicnicAPI(
-        username=PICNIC_USERNAME, password=PICNIC_PASSWORD, country_code="NL"
-    )
+    try:
+        client = python_picnic_api.PicnicAPI(
+            username=get_settings().PICNIC_USERNAME,
+            password=get_settings().PICNIC_PASSWORD,
+            country_code="NL",
+        )
+    except Exception as e:
+        logger.error("Error while connecting to Picnic API: %s", e)
+        raise
+
+    try:
+        logger.debug("Opening Picnic API connection")
+        yield client
+    except Exception as e:
+        logger.error("Error while using Picnic API: %s", e)
+        raise

@@ -54,7 +54,7 @@ class Recipe(GlobalModel):
     name = sqlalchemy.Column(sqlalchemy.String(128), nullable=False)
     category = sqlalchemy.Column(sqlalchemy.String(128), nullable=False)
 
-    ingredients: orm.Mapped["Ingredient"] = orm.relationship(
+    ingredients: orm.Mapped[list["Ingredient"]] = orm.relationship(
         back_populates="recipe", cascade="save-update"
     )
 
@@ -65,7 +65,6 @@ class Product(GlobalModel):
     Attributes:
         id: The unique identifier of the product.
         name: The name of the product.
-        category: The category of the product.
         image_uri: The uri of the image of the product.
 
     Relationships:
@@ -75,12 +74,11 @@ class Product(GlobalModel):
 
     __tablename__ = "products"
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    id = sqlalchemy.Column(sqlalchemy.String(50), primary_key=True)
     name = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
-    category = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
     image_uri = sqlalchemy.Column(sqlalchemy.String(255), nullable=True)
 
-    ingredients: orm.Mapped["Ingredient"] = orm.relationship(
+    ingredients: orm.Mapped[list["Ingredient"]] = orm.relationship(
         back_populates="product", cascade="all, delete"
     )
 
@@ -109,12 +107,12 @@ class Ingredient(GlobalModel):
     recipe_id = sqlalchemy.Column(
         sqlalchemy.Integer,
         sqlalchemy.ForeignKey("recipes.id"),
-        nullable=False,
+        nullable=True,
     )
     product_id = sqlalchemy.Column(
         sqlalchemy.Integer,
         sqlalchemy.ForeignKey("products.id"),
-        nullable=False,
+        nullable=True,
     )
 
     recipe: orm.Mapped["Recipe"] = orm.relationship(

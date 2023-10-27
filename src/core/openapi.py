@@ -9,6 +9,11 @@ class Descriptions(str, enum.Enum):
 
     dummy = "This is a dummy description."
 
+    recipe_id = "The identifier of the recipe."
+
+    recipe_payload = "The payload of the recipe."
+    order_payload = "The payload of the order."
+
 
 def get_openapi_tags_metadata() -> list[dict[str, str]]:
     """Returns the tag definitions for the swagger documentation.

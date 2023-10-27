@@ -11,7 +11,7 @@ from src.routers.health import views as health_views
 views = [
     # ingredients_views,
     recipes_views,
-    # orders_views,
+    orders_views,
     health_views,
 ]
 
@@ -47,7 +47,7 @@ app.include_router(prefix_router)
 database_crud.create_metadata()
 
 # CORS middleware.
-origins = [
+origins: list[str] = [
     # Dev poorten
     # f"http://127.0.0.1:{FRONTEND_PORT}",
     # f"http://localhost:{FRONTEND_PORT}",

@@ -34,7 +34,7 @@ class BaseOutputModel(pydantic.BaseModel):
 
     """
 
-    id: str = pydantic.Field(
+    id: int = pydantic.Field(
         ...,
         title="ID",
         description="The internal primary key of the model.",
@@ -100,6 +100,14 @@ class IngredientInputSchema(pydantic.BaseModel):
     )
 
 
+class OrderInputSchema(pydantic.BaseModel):
+    recipes: list[str] = pydantic.Field(
+        ...,
+        title="Recipes",
+        description="The recipes to order.",
+    )
+
+
 class RecipeUpdateSchema(RecipeInputSchema):
     __annotations__ = make_all_fields_optional(RecipeInputSchema)
 
@@ -113,7 +121,7 @@ class IngredientUpdateSchema(IngredientInputSchema):
 
 
 class IngredientOutputSchema(BaseOutputModel, IngredientInputSchema):
-    recipe_id: str = pydantic.Field(
+    recipe_id: int = pydantic.Field(
         ...,
         title="Recipe ID",
         description="The ID of the parent recipe of the ingredient.",
@@ -133,7 +141,7 @@ class RecipeOutputSchema(BaseOutputModel, RecipeInputSchema):
     )
 
 
-class ProductOutputSchema(BaseOutputModel, ProductInputSchema):
+class ProductOutputSchema(ProductInputSchema):
     ingredients: list[IngredientOutputSchema] = pydantic.Field(
         ...,
         title="Ingredients",

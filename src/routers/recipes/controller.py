@@ -194,7 +194,7 @@ def patch_recipe(
 
     ingredients_list = _get_ingredients_from_picnic(pc_session=pc_session)
 
-    logger.debug(f"Adding ingredients to recipe {recipe.name}.")
+    logger.debug(f"Updating ingredients for recipe {recipe.name}.")
     _add_ingredients_to_recipe(
         db_session=db_session,
         recipe=recipe,

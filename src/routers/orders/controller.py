@@ -1,4 +1,4 @@
-""" Business logic for the recipes router. """
+""" Business logic for the orders router. """
 import logging
 
 from sqlalchemy import orm

@@ -13,6 +13,7 @@ class Descriptions(str, enum.Enum):
 
     recipe_payload = "The payload of the recipe."
     order_payload = "The payload of the order."
+    promo_payload = "The payload of the promo."
 
 
 def get_openapi_tags_metadata() -> list[dict[str, str]]:
@@ -24,11 +25,19 @@ def get_openapi_tags_metadata() -> list[dict[str, str]]:
     """
     return [
         {
-            "name": "Header",
-            "description": "A small description related to the header.",
-        },
-        {
             "name": "Health",
             "description": "Operations to check the health of the API.",
+        },
+        {
+            "name": "Recipes",
+            "description": "CRUD operations to manage recipes.",
+        },
+        {
+            "name": "Orders",
+            "description": "CRUD operations to manage orders.",
+        },
+        {
+            "name": "Dealicious",
+            "description": "CRUD operations to manage discounts.",
         },
     ]

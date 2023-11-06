@@ -15,6 +15,7 @@ COPY poetry.lock pyproject.toml /
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install curl gcc -y && \
+    rm -rf /var/lib/apt/lists/* && \
     pip install poetry && \
     poetry install --without dev
 

@@ -111,7 +111,8 @@ def post_recipe(
     "/{recipe_id}",
     summary="Update a recipe.",
     description="This endpoint requires a payload with the details of a "
-    "recipe; it updates a recipe.",
+    "recipe; it updates a recipe. When the shopping cart contains ingredients,"
+    "the recipe will be updated with the ingredients from the shopping cart.",
     responses={
         200: {"description": "The updated recipe."},
         404: {"description": "The recipe does not exist."},
@@ -142,7 +143,7 @@ def patch_recipe(
 
     """
     return controller.patch_recipe(
-        recipe_udate=recipe_update,
+        recipe_update=recipe_update,
         recipe_id=recipe_id,
         db_session=db_session,
         pc_session=pc_session,

@@ -1,4 +1,4 @@
-""" Contains endpoints for interacting with the recipes table."""
+""" Contains endpoints for interacting with the orders table."""
 
 import fastapi
 from fastapi import status

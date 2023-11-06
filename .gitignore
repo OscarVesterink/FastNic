@@ -162,4 +162,5 @@ cython_debug/
 # logging
 controller_logging.txt
 requests_logging.txt
+test.db
 ```

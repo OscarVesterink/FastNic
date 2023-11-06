@@ -3,13 +3,13 @@ from fastapi.middleware import cors
 
 from src.core import config, openapi, logging
 from src.database import crud as database_crud
-from src.routers.ingredients import views as ingredients_views
+from src.routers.dealicious import views as dealicious_views
 from src.routers.recipes import views as recipes_views
 from src.routers.orders import views as orders_views
 from src.routers.health import views as health_views
 
 views = [
-    # ingredients_views,
+    dealicious_views,
     recipes_views,
     orders_views,
     health_views,

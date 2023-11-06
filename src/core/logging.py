@@ -26,7 +26,7 @@ def setup_logging(logger_settings: dict[str, str]) -> None:
     ]
     for filename, logger_name in loggers:
         logger = logging.getLogger(logger_name)
-        logger.setLevel(logging.INFO)
+        logger.setLevel(logging.DEBUG)
         handler = logging.FileHandler(filename)
         handler.setFormatter(formatter)
         logger.addHandler(handler)

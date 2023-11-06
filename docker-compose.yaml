@@ -34,9 +34,5 @@ services:
     depends_on:
       postgresql:
         condition: service_started
-      s3:
-        condition: service_started
-      kafka:
-        condition: service_started
     networks:
       - api-db

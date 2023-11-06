@@ -110,7 +110,7 @@ class Ingredient(GlobalModel):
         nullable=True,
     )
     product_id = sqlalchemy.Column(
-        sqlalchemy.Integer,
+        sqlalchemy.String(50),
         sqlalchemy.ForeignKey("products.id"),
         nullable=True,
     )
